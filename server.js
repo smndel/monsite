@@ -1,12 +1,21 @@
 let express = require('express')
-let app = express()
-let bodyParser = require('body-parser')
-let session = require('express-session')
+    app = express()
+	bodyParser = require('body-parser')
+ 	session = require('express-session')
+	sassMiddleware = require('node-sass-middleware')
+	path = require('path');
 
 //Moteur de template
 app.set('view engine', 'twig')
 
 //Middleware
+app.use(sassMiddleware({
+    /* Options */
+    src: path.join(__dirname),
+    dest: path.join(__dirname, 'public/'),
+    debug: true,
+    outputStyle: 'compressed',
+}));
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
